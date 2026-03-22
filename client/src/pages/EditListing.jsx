@@ -263,11 +263,10 @@ const EditListing = () => {
               <div className="form-group">
                 <label>ค่าไฟ (บาท/หน่วย)</label>
                 <input
-                  type="number"
+                  type="text"
                   name="electricityPrice"
                   value={formData.electricityPrice}
                   onChange={handleChange}
-                  min="0"
                 />
               </div>
             </div>

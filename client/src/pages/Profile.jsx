@@ -211,7 +211,10 @@ const Profile = () => {
                         onChange={handleProfileChange}
                         placeholder="0xx-xxx-xxxx"
                         maxLength={10}
+                        disabled={!!user.phone}
+                        className={user.phone ? 'disabled-input' : ''}
                       />
+                      {user.phone && <small>ไม่สามารถเปลี่ยนเบอร์โทรได้หลังจากตั้งค่าแล้ว</small>}
                     </div>
                     <div className="form-group">
                       <label>Line ID</label>

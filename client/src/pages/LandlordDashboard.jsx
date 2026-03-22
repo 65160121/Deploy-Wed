@@ -135,12 +135,14 @@ const LandlordDashboard = () => {
                     </td>
                     <td>
                       <div className="action-buttons">
-                        <button
-                          onClick={() => navigate(`/landlord/edit/${listing.id}`)}
-                          className="btn btn-secondary btn-sm"
-                        >
-                          แก้ไข
-                        </button>
+                        {listing.status !== 'rejected' && (
+                          <button
+                            onClick={() => navigate(`/landlord/edit/${listing.id}`)}
+                            className="btn btn-secondary btn-sm"
+                          >
+                            แก้ไข
+                          </button>
+                        )}
                         <button
                           onClick={() => deleteListing(listing.id)}
                           className="btn btn-danger btn-sm"

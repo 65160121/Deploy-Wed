@@ -19,7 +19,7 @@ const Navbar = () => {
       <div className="container">
         <div className="navbar-content">
           <Link to="/" className="navbar-brand">
-            ระบบหอพัก
+            ระบบตัวกลางการปล่อยเช่าห้องพัก
           </Link>
           <div className="navbar-links">
             {user ? (

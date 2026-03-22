@@ -119,7 +119,9 @@ router.post('/login', [
         email: user.email,
         firstName: user.first_name,
         lastName: user.last_name,
-        role: user.role
+        role: user.role,
+        phone: user.phone || null,
+        lineId: user.line_id || null
       }
     });
   } catch (error) {

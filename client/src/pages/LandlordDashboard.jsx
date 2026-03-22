@@ -115,7 +115,14 @@ const LandlordDashboard = () => {
                       </Link>
                     </td>
                     <td>{parseFloat(listing.price).toLocaleString()} บาท/เดือน</td>
-                    <td>{getStatusBadge(listing.status, listing.is_available)}</td>
+                    <td>
+                      {getStatusBadge(listing.status, listing.is_available)}
+                      {listing.status === 'rejected' && listing.rejection_reason && (
+                        <div style={{ fontSize: '12px', color: '#dc2626', marginTop: '4px' }}>
+                          เหตุผล: {listing.rejection_reason}
+                        </div>
+                      )}
+                    </td>
                     <td>
                       <label className="toggle-switch">
                         <input

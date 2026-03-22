@@ -299,10 +299,10 @@ router.post('/', auth, requireRole('landlord', 'admin'), upload.array('images', 
         address.trim(),
         latitude || null,
         longitude || null,
-        price,
-        deposit || null,
-        waterPrice || null,
-        electricityPrice || null,
+        parseFloat(price),
+        deposit ? parseFloat(deposit) : null,
+        waterPrice ? parseFloat(waterPrice) : null,
+        electricityPrice ? parseFloat(electricityPrice) : null,
         roomType
       ]
     );
@@ -396,10 +396,10 @@ router.put('/:id', auth, requireRole('landlord', 'admin'), upload.array('images'
         address,
         latitude || null,
         longitude || null,
-        price,
-        deposit || null,
-        waterPrice || null,
-        electricityPrice || null,
+        parseFloat(price),
+        deposit ? parseFloat(deposit) : null,
+        waterPrice ? parseFloat(waterPrice) : null,
+        electricityPrice ? parseFloat(electricityPrice) : null,
         roomType,
         id
       ]

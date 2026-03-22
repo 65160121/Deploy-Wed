@@ -1,0 +1,248 @@
+.landlord-dashboard {
+  padding: var(--space-2xl) 0 var(--space-3xl);
+  min-height: calc(100vh - 72px);
+  background: var(--bg-primary);
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xl);
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.dashboard-header h1 {
+  color: var(--text-primary);
+  font-size: 28px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dashboard-header h1::before {
+  content: '📋';
+  font-size: 32px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--space-3xl) var(--space-xl);
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  border: 2px dashed var(--border);
+}
+
+.empty-state::before {
+  content: '🏠';
+  font-size: 64px;
+  display: block;
+  margin-bottom: var(--space-lg);
+}
+
+.empty-state p {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+.listings-table {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+}
+
+.listings-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.listings-table thead {
+  background: var(--bg-secondary);
+}
+
+.listings-table th {
+  padding: var(--space-md) var(--space-lg);
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 2px solid var(--border);
+}
+
+.listings-table td {
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-primary);
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.listings-table tbody tr {
+  transition: var(--transition);
+}
+
+.listings-table tbody tr:hover {
+  background: var(--primary-50);
+}
+
+.listings-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.listing-thumb {
+  width: 100px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.no-image {
+  width: 100px;
+  height: 70px;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border) 100%);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.listing-title-link {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.listing-title-link:hover {
+  color: var(--primary);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.pending {
+  background: rgba(234, 179, 8, 0.15);
+  color: var(--warning-dark);
+}
+
+.status-badge.pending::before {
+  content: '⏳';
+}
+
+.status-badge.approved {
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--success-dark);
+}
+
+.status-badge.approved::before {
+  content: '✓';
+}
+
+.status-badge.rejected {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger-dark);
+}
+
+.status-badge.rejected::before {
+  content: '✗';
+}
+
+.status-badge.sold-out {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 56px;
+  height: 30px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--border-dark);
+  transition: var(--transition);
+  border-radius: var(--radius-full);
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 24px;
+  width: 24px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: var(--transition);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: var(--success);
+}
+
+.toggle-switch input:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
+
+.action-buttons {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.action-buttons .btn-sm {
+  padding: 10px 16px;
+  font-size: 13px;
+}
+
+@media (max-width: 1024px) {
+  .listings-table {
+    overflow-x: auto;
+  }
+  
+  .listings-table table {
+    min-width: 900px;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 22px;
+  }
+}

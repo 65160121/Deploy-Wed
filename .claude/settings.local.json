@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find 'd:/Work Files/Rental-System' -not -path */node_modules/* -not -path */.history/* -type f)",
+      "WebFetch(domain:www.renthub.in.th)",
+      "Bash(npm install:*)"
+    ]
+  }
+}

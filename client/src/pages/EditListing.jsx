@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import axios from 'axios'
+import axios from '../api/axios'
 import './ListingForm.css'
 
 const EditListing = () => {

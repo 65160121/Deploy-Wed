@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+import axios from '../api/axios'
 import './Home.css'
 
 // Amenity categories mapping by name

@@ -3,7 +3,9 @@
     "allow": [
       "Bash(find 'd:/Work Files/Rental-System' -not -path */node_modules/* -not -path */.history/* -type f)",
       "WebFetch(domain:www.renthub.in.th)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(sed -i \"s|import axios from ''axios''|import axios from ''../api/axios''|g\" pages/ListingDetail.jsx pages/Home.jsx pages/AdminListings.jsx pages/EditListing.jsx pages/CreateListing.jsx pages/Profile.jsx pages/AdminUsers.jsx pages/LandlordDashboard.jsx pages/Favorites.jsx pages/AdminDashboard.jsx)",
+      "Bash(sed -i \"s|import axios from ''axios''|import axios from ''./api/axios''|g\" context/AuthContext.jsx)"
     ]
   }
 }

@@ -123,21 +123,63 @@
   justify-content: flex-end;
 }
 
-@media (max-width: 768px) {
+/* ── Tablet (768px – 1023px) ── */
+@media (max-width: 1023px) {
+  .listing-review-header {
+    grid-template-columns: 140px 1fr;
+  }
+
+  .admin-header h1 {
+    font-size: 22px;
+  }
+}
+
+/* ── Mobile (≤ 767px) ── */
+@media (max-width: 767px) {
+  .admin-listings {
+    padding: var(--space-xl) 0 var(--space-2xl);
+  }
+
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-header h1 {
+    font-size: 20px;
+  }
+
+  /* Stack image and info vertically */
   .listing-review-header {
     grid-template-columns: 1fr;
   }
 
+  .review-image {
+    width: 100%;
+    height: 180px;
+  }
+
+  .review-info h3 {
+    font-size: 17px;
+  }
+
   .review-actions {
     flex-direction: column;
+    gap: var(--space-sm);
   }
 
   .review-actions button,
   .review-actions a {
     width: 100%;
+    text-align: center;
+    justify-content: center;
   }
-  
+
   .listing-review-card {
-    padding: var(--space-lg);
+    padding: var(--space-md);
+  }
+
+  .review-description {
+    padding: var(--space-md);
   }
 }

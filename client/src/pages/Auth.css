@@ -119,17 +119,52 @@
   padding: 0 var(--space-md);
 }
 
-@media (max-width: 480px) {
+/* ── Tablet (768px – 1023px) ── */
+@media (max-width: 1023px) {
   .auth-card {
+    max-width: 420px;
     padding: var(--space-xl);
+  }
+}
+
+/* ── Mobile (≤ 767px) ── */
+@media (max-width: 767px) {
+  .auth-container {
+    padding: var(--space-lg) var(--space-md);
+    align-items: flex-start;
+    padding-top: 40px;
+  }
+
+  /* Card full width on mobile */
+  .auth-card {
+    width: 100%;
+    max-width: 100%;
+    padding: var(--space-lg);
     border-radius: var(--radius-xl);
+    box-shadow: 0 4px 20px rgba(21, 112, 239, 0.1), 0 1px 6px rgba(0, 0, 0, 0.06);
   }
-  
-  .auth-card h2 {
-    font-size: 24px;
-  }
-  
+
   .auth-card::before {
     font-size: 40px;
+    margin-bottom: var(--space-md);
+  }
+
+  .auth-card h2 {
+    font-size: 22px;
+  }
+
+  .auth-card > p {
+    font-size: 14px;
+    margin-bottom: var(--space-lg);
+  }
+
+  .auth-card .btn-primary {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+
+  .auth-footer {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
   }
 }

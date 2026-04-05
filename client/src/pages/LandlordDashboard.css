@@ -226,23 +226,74 @@
   font-size: 13px;
 }
 
-@media (max-width: 1024px) {
+/* ── Tablet (768px – 1023px) ── */
+@media (max-width: 1023px) {
+  /* Enable horizontal table scroll on tablet */
   .listings-table {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
-  
+
   .listings-table table {
     min-width: 900px;
   }
+
+  .dashboard-header h1 {
+    font-size: 24px;
+  }
 }
 
-@media (max-width: 600px) {
+/* ── Mobile (≤ 767px) ── */
+@media (max-width: 767px) {
+  .landlord-dashboard {
+    padding: var(--space-xl) 0 var(--space-2xl);
+  }
+
+  /* Stack header vertically on mobile */
   .dashboard-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: var(--space-sm);
   }
-  
+
   .dashboard-header h1 {
-    font-size: 22px;
+    font-size: 20px;
+  }
+
+  /* Table scrolls horizontally on mobile */
+  .listings-table {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-xl);
+  }
+
+  .listings-table table {
+    min-width: 700px;
+  }
+
+  .listings-table th,
+  .listings-table td {
+    padding: var(--space-sm) var(--space-md);
+    font-size: 13px;
+  }
+
+  .listing-thumb,
+  .no-image {
+    width: 80px;
+    height: 56px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .action-buttons .btn-sm {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .empty-state {
+    padding: var(--space-2xl) var(--space-lg);
   }
 }

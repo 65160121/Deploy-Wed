@@ -288,20 +288,87 @@
   transform: scale(1.1);
 }
 
-@media (max-width: 768px) {
+/* ── Tablet (768px – 1023px) ── */
+@media (max-width: 1023px) {
   .listing-form {
-    padding: var(--space-lg);
+    padding: var(--space-xl);
+  }
+
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .amenities-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .existing-images-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+/* ── Mobile (≤ 767px) ── */
+@media (max-width: 767px) {
+  .listing-form-container {
+    padding: var(--space-xl) 0 var(--space-2xl);
+  }
+
+  .listing-form-container h1 {
+    font-size: 22px;
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Form full width on mobile */
+  .listing-form {
+    padding: var(--space-md);
+    border-radius: var(--radius-xl);
+  }
+
+  .form-section {
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-lg);
+  }
+
+  .form-section h2 {
+    font-size: 16px;
   }
 
   .form-row {
     grid-template-columns: 1fr;
+    gap: var(--space-md);
   }
 
   .amenities-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+  }
+
+  .amenity-checkbox {
+    font-size: 13px;
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+    gap: var(--space-sm);
+  }
+
+  .form-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .existing-images-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .existing-image {
+    height: 130px;
   }
 
   .image-preview-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
   }
 }

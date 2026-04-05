@@ -64,8 +64,8 @@ const PriceRangeSlider = ({ min, max, value, onChange, buckets }) => {
       <div className="price-inputs">
         <div className="price-input-box">
           <span className="price-input-label">ราคาเริ่มต้น</span>
-          <input type="number" value={minVal} min={min} step={100} placeholder="0"
-            onChange={(e) => onChange([Number(e.target.value) || 0, maxRaw])} />
+          <input type="number" value={minVal} min={0} step={100} placeholder="0"
+            onChange={(e) => onChange([Math.max(0, Number(e.target.value) || 0), maxRaw])} />
         </div>
         <span className="price-dash">–</span>
         <div className="price-input-box">

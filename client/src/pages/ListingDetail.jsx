@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
 import { useAuth } from '../context/AuthContext'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
@@ -115,7 +115,7 @@ const ListingDetail = () => {
   return (
     <div className="listing-detail-container">
       <div className="container">
-        <Link to="/" className="back-link"> กลับสู่หน้าหลัก</Link>
+        <button onClick={() => window.history.back()} className="back-link">← ย้อนกลับ</button>
 
         <div className="listing-detail">
           <div className="listing-images">

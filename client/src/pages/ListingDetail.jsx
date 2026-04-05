@@ -206,7 +206,7 @@ const ListingDetail = () => {
                 {listing.electricity_price && (
                   <div>
                     <strong>ค่าไฟ:</strong>
-                    <p>{parseFloat(listing.electricity_price).toLocaleString()} บาท/หน่วย</p>
+                    <p>{listing.electricity_price}</p>
                   </div>
                 )}
               </div>

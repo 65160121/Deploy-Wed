@@ -302,7 +302,7 @@ router.post('/', auth, requireRole('landlord', 'admin'), upload.array('images', 
         parseFloat(price),
         deposit && !isNaN(parseFloat(deposit)) ? parseFloat(deposit) : null,
         waterPrice && !isNaN(parseFloat(waterPrice)) ? parseFloat(waterPrice) : null,
-        electricityPrice && !isNaN(parseFloat(electricityPrice)) ? parseFloat(electricityPrice) : null,
+        electricityPrice || null,
         roomType
       ]
     );
@@ -399,7 +399,7 @@ router.put('/:id', auth, requireRole('landlord', 'admin'), upload.array('images'
         parseFloat(price),
         deposit && !isNaN(parseFloat(deposit)) ? parseFloat(deposit) : null,
         waterPrice && !isNaN(parseFloat(waterPrice)) ? parseFloat(waterPrice) : null,
-        electricityPrice && !isNaN(parseFloat(electricityPrice)) ? parseFloat(electricityPrice) : null,
+        electricityPrice || null,
         roomType,
         id
       ]

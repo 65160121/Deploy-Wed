@@ -126,7 +126,7 @@ const ListingDetail = () => {
                 </button>
               )}
               <img
-                src={images[currentImageIndex].startsWith('http') ? images[currentImageIndex] : `http://localhost:5000${images[currentImageIndex]}`}
+                src={images[currentImageIndex].startsWith('http') ? images[currentImageIndex] : `${import.meta.env.VITE_API_URL || ''}${images[currentImageIndex]}`}
                 alt={listing.title}
                 onError={(e) => {
                   e.target.src = 'https://via.placeholder.com/800x400?text=No+Image'
@@ -148,7 +148,7 @@ const ListingDetail = () => {
                 {images.map((img, index) => (
                   <img
                     key={index}
-                    src={img.startsWith('http') ? img : `http://localhost:5000${img}`}
+                    src={img.startsWith('http') ? img : `${import.meta.env.VITE_API_URL || ''}${img}`}
                     alt={`${listing.title} ${index + 1}`}
                     className={index === currentImageIndex ? 'active' : ''}
                     onClick={() => setCurrentImageIndex(index)}

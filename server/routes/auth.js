@@ -59,7 +59,9 @@ router.post('/register', [
         email,
         firstName,
         lastName,
-        role
+        role,
+        phone: null,
+        lineId: null
       }
     });
   } catch (error) {
@@ -175,12 +177,20 @@ router.put('/profile', auth, [
 
     const { firstName, lastName, phone, lineId } = req.body;
 
+    // Fetch existing values to prevent overwriting phone/lineId once set
+    const existing = await pool.query('SELECT phone, line_id FROM users WHERE id = ?', [req.user.userId]);
+    const existingPhone = existing[0]?.phone || null;
+    const existingLineId = existing[0]?.line_id || null;
+
+    const newPhone = existingPhone || phone || null;
+    const newLineId = existingLineId || lineId || null;
+
     await pool.query(
       'UPDATE users SET first_name = ?, last_name = ?, phone = ?, line_id = ? WHERE id = ?',
-      [firstName, lastName, phone || null, lineId || null, req.user.userId]
+      [firstName, lastName, newPhone, newLineId, req.user.userId]
     );
 
-    res.json({ 
+    res.json({
       message: 'Profile updated successfully',
       user: {
         id: req.user.userId,
@@ -188,8 +198,8 @@ router.put('/profile', auth, [
         firstName,
         lastName,
         role: req.user.role,
-        phone: phone || null,
-        lineId: lineId || null
+        phone: newPhone,
+        lineId: newLineId
       }
     });
   } catch (error) {

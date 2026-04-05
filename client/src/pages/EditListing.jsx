@@ -55,7 +55,7 @@ const EditListing = () => {
         deposit: listing.deposit || '',
         waterPrice: listing.water_price || '',
         electricityPrice: listing.electricity_price || '',
-        roomType: listing.room_type || 'air_conditioned',
+        roomType: listing.room_type || 'studio',
         selectedAmenities: listing.amenities ? listing.amenities.map(a => a.id) : []
       })
       setExistingImages(listing.images || [])

@@ -50,7 +50,7 @@ const Favorites = () => {
                   {listing.primary_image && (
                     <div className="favorite-image">
                       <img
-                        src={listing.primary_image.startsWith('http') ? listing.primary_image : `http://localhost:5000${listing.primary_image}`}
+                        src={listing.primary_image.startsWith('http') ? listing.primary_image : `${import.meta.env.VITE_API_URL || ''}${listing.primary_image}`}
                         alt={listing.title}
                         onError={(e) => {
                           e.target.src = 'https://via.placeholder.com/300x200?text=No+Image'

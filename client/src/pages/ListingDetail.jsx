@@ -253,7 +253,7 @@ const ListingDetail = () => {
                   <div className="contact-info">
                     {(listing.first_name || listing.last_name) && (
                       <div>
-                        <strong>ผู้ประกาศ:</strong> {listing.first_name} {listing.last_name}
+                        <strong>ผู้ประกาศ:</strong> {listing.first_name || ''} {listing.last_name || ''}
                       </div>
                     )}
                     {listing.phone && (

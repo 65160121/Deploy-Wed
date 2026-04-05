@@ -183,13 +183,34 @@ router.get('/price-stats', async (req, res) => {
   }
 });
 
+// Get landlord's listings (Dashboard) - must be before /:id
+router.get('/landlord/my-listings', auth, requireRole('landlord', 'admin'), async (req, res) => {
+  try {
+    const listings = await pool.query(
+      `SELECT
+        l.*,
+        (SELECT COUNT(*) FROM listing_images WHERE listing_id = l.id) as image_count,
+        (SELECT image_url FROM listing_images WHERE listing_id = l.id AND is_primary = 1 LIMIT 1) as primary_image
+       FROM listings l
+       WHERE l.landlord_id = ?
+       ORDER BY l.created_at DESC`,
+      [req.user.userId]
+    );
+
+    res.json({ listings: serializeBigInt(listings) });
+  } catch (error) {
+    console.error('Get landlord listings error:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
 // Get single listing details
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    
+
     const listings = await pool.query(
-      `SELECT 
+      `SELECT
         l.*,
         u.first_name,
         u.last_name,
@@ -201,54 +222,51 @@ router.get('/:id', async (req, res) => {
        WHERE l.id = ?`,
       [id]
     );
-    
+
     if (listings.length === 0) {
       return res.status(404).json({ message: 'Listing not found' });
     }
-    
+
     const listing = listings[0];
-    
+
+    // Check access: only approved listings are public; owner/admin can see all statuses
+    if (listing.status !== 'approved') {
+      const jwt = require('jsonwebtoken');
+      const token = req.headers.authorization?.split(' ')[1];
+      let authorized = false;
+      if (token) {
+        try {
+          const decoded = jwt.verify(token, process.env.JWT_SECRET);
+          if (decoded.role === 'admin' || Number(decoded.userId) === Number(listing.landlord_id)) {
+            authorized = true;
+          }
+        } catch {}
+      }
+      if (!authorized) {
+        return res.status(404).json({ message: 'Listing not found' });
+      }
+    }
+
     // Get images
     const images = await pool.query(
       'SELECT id, image_url, is_primary, display_order FROM listing_images WHERE listing_id = ? ORDER BY is_primary DESC, display_order ASC',
       [id]
     );
     listing.images = images;
-    
+
     // Get amenities
     const amenities = await pool.query(
-      `SELECT a.id, a.name, a.icon 
+      `SELECT a.id, a.name, a.icon
        FROM amenities a
        INNER JOIN listing_amenities la ON a.id = la.amenity_id
        WHERE la.listing_id = ?`,
       [id]
     );
     listing.amenities = amenities;
-    
+
     res.json({ listing: serializeBigInt(listing) });
   } catch (error) {
     console.error('Get listing error:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
-  }
-});
-
-// Get landlord's listings (Dashboard)
-router.get('/landlord/my-listings', auth, requireRole('landlord', 'admin'), async (req, res) => {
-  try {
-    const listings = await pool.query(
-      `SELECT 
-        l.*,
-        (SELECT COUNT(*) FROM listing_images WHERE listing_id = l.id) as image_count,
-        (SELECT image_url FROM listing_images WHERE listing_id = l.id AND is_primary = 1 LIMIT 1) as primary_image
-       FROM listings l
-       WHERE l.landlord_id = ?
-       ORDER BY l.created_at DESC`,
-      [req.user.userId]
-    );
-    
-    res.json({ listings: serializeBigInt(listings) });
-  } catch (error) {
-    console.error('Get landlord listings error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });

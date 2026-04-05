@@ -6,6 +6,8 @@ import './AdminListings.css'
 const AdminListings = () => {
   const [listings, setListings] = useState([])
   const [loading, setLoading] = useState(true)
+  const [rejectingId, setRejectingId] = useState(null)
+  const [rejectReason, setRejectReason] = useState('')
 
   useEffect(() => {
     fetchPendingListings()
@@ -32,11 +34,17 @@ const AdminListings = () => {
     }
   }
 
-  const rejectListing = async (id) => {
-    const reason = window.prompt('ระบุเหตุผลที่ไม่อนุมัติ (ถ้ามี):')
+  const confirmReject = async () => {
+    if (!rejectingId) return
+    if (!rejectReason.trim()) {
+      alert('กรุณาระบุเหตุผลที่ไม่อนุมัติ')
+      return
+    }
     try {
-      await axios.post(`/api/admin/listings/${id}/reject`, { reason: reason || '' })
-      setListings(listings.filter(listing => listing.id !== id))
+      await axios.post(`/api/admin/listings/${rejectingId}/reject`, { reason: rejectReason.trim() })
+      setListings(listings.filter(listing => listing.id !== rejectingId))
+      setRejectingId(null)
+      setRejectReason('')
     } catch (error) {
       console.error('Error rejecting listing:', error)
       alert('เกิดข้อผิดพลาดในการไม่อนุมัติ')
@@ -51,6 +59,26 @@ const AdminListings = () => {
           <Link to="/admin/dashboard" className="btn btn-secondary">กลับสู่แดชบอร์ด</Link>
         </div>
 
+        {rejectingId && (
+          <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+            <div style={{ background: '#fff', borderRadius: '12px', padding: '24px', width: '400px', maxWidth: '90vw' }}>
+              <h3 style={{ marginBottom: '12px' }}>ระบุเหตุผลที่ไม่อนุมัติ</h3>
+              <textarea
+                value={rejectReason}
+                onChange={(e) => setRejectReason(e.target.value.slice(0, 500))}
+                rows={4}
+                placeholder="กรุณาระบุเหตุผล..."
+                style={{ width: '100%', padding: '8px', borderRadius: '8px', border: '1px solid #d1d5db', resize: 'vertical', boxSizing: 'border-box' }}
+              />
+              <div style={{ fontSize: '12px', color: '#6b7280', textAlign: 'right', marginBottom: '12px' }}>{rejectReason.length}/500</div>
+              <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+                <button onClick={() => { setRejectingId(null); setRejectReason('') }} className="btn btn-secondary">ยกเลิก</button>
+                <button onClick={confirmReject} className="btn btn-danger">ยืนยันไม่อนุมัติ</button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {loading ? (
           <div style={{ textAlign: 'center', padding: '40px' }}>กำลังโหลด...</div>
         ) : listings.length === 0 ? (
@@ -64,7 +92,7 @@ const AdminListings = () => {
                 <div className="listing-review-header">
                   {listing.primary_image && (
                     <img
-                      src={listing.primary_image.startsWith('http') ? listing.primary_image : `http://localhost:5000${listing.primary_image}`}
+                      src={listing.primary_image.startsWith('http') ? listing.primary_image : `${import.meta.env.VITE_API_URL || ''}${listing.primary_image}`}
                       alt={listing.title}
                       className="review-image"
                       onError={(e) => {
@@ -77,7 +105,7 @@ const AdminListings = () => {
                     <p><strong>เจ้าของ:</strong> {listing.first_name} {listing.last_name} ({listing.landlord_email})</p>
                     <p><strong>ที่อยู่:</strong> {listing.address}</p>
                     <p><strong>ราคา:</strong> {parseFloat(listing.price).toLocaleString()} บาท/เดือน</p>
-                    <p><strong>ประเภท:</strong> {{ studio: 'Studio', one_bedroom: '1 Bedroom', two_bedroom: '2 Bedroom', air_conditioned: 'Studio', fan: 'Studio' }[listing.room_type] || listing.room_type}</p>
+                    <p><strong>ประเภท:</strong> {{ studio: 'Studio', one_bedroom: '1 Bedroom', two_bedroom: '2 Bedroom' }[listing.room_type] || listing.room_type}</p>
                   </div>
                 </div>
                 {listing.description && (
@@ -91,7 +119,7 @@ const AdminListings = () => {
                     ดูรายละเอียด
                   </Link>
                   <button
-                    onClick={() => rejectListing(listing.id)}
+                    onClick={() => { setRejectingId(listing.id); setRejectReason('') }}
                     className="btn btn-danger"
                   >
                     ไม่อนุมัติ

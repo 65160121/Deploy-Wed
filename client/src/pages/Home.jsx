@@ -317,7 +317,7 @@ const Home = () => {
                       {listing.primary_image ? (
                         <div className="listing-image">
                           <img
-                            src={listing.primary_image.startsWith('http') ? listing.primary_image : `http://localhost:5000${listing.primary_image}`}
+                            src={listing.primary_image.startsWith('http') ? listing.primary_image : `${import.meta.env.VITE_API_URL || ''}${listing.primary_image}`}
                             alt={listing.title}
                             onError={(e) => {
                               e.target.src = 'https://via.placeholder.com/300x200?text=No+Image'
@@ -336,7 +336,7 @@ const Home = () => {
                           {parseFloat(listing.price).toLocaleString()} บาท/เดือน
                         </p>
                         <p className="listing-type">
-                          {{ studio: 'Studio', one_bedroom: '1 Bedroom', two_bedroom: '2 Bedroom', air_conditioned: 'Studio', fan: 'Studio' }[listing.room_type] || listing.room_type}
+                          {{ studio: 'Studio', one_bedroom: '1 Bedroom', two_bedroom: '2 Bedroom' }[listing.room_type] || listing.room_type}
                         </p>
                       </div>
                     </Link>

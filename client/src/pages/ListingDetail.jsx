@@ -115,7 +115,7 @@ const ListingDetail = () => {
   return (
     <div className="listing-detail-container">
       <div className="container">
-        <button onClick={() => window.history.back()} className="back-link">← ย้อนกลับ</button>
+        <button onClick={() => window.history.back()} className="back-link"> ย้อนกลับ</button>
 
         <div className="listing-detail">
           <div className="listing-images">

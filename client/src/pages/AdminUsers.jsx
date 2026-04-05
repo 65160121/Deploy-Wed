@@ -66,6 +66,8 @@ const AdminUsers = () => {
                   <th>อีเมล</th>
                   <th>ชื่อ-นามสกุล</th>
                   <th>ประเภท</th>
+                  <th>เบอร์โทร</th>
+                  <th>Line ID</th>
                   <th>จำนวนประกาศ</th>
                   <th>สถานะ</th>
                   <th>วันที่สมัคร</th>
@@ -79,7 +81,9 @@ const AdminUsers = () => {
                     <td>{user.email}</td>
                     <td>{user.first_name} {user.last_name}</td>
                     <td>{getRoleLabel(user.role)}</td>
-                    <td>{user.listing_count || 0}</td>  
+                    <td>{user.phone || '-'}</td>
+                    <td>{user.line_id || '-'}</td>
+                    <td>{user.listing_count || 0}</td>
                     <td>
                       {user.is_banned ? (
                         <span className="status-badge banned-badge">ถูกระงับ</span>

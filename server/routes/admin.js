@@ -94,7 +94,7 @@ router.get('/users', auth, requireRole('admin'), async (req, res) => {
         created_at,
         (SELECT COUNT(*) FROM listings WHERE landlord_id = users.id) as listing_count
        FROM users
-       ORDER BY created_at DESC`
+       ORDER BY id ASC`
     );
     
     res.json({ users: serializeBigInt(users) });

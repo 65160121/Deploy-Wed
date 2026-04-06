@@ -155,12 +155,73 @@ Client จะรันที่ `http://localhost:3000`
 - **listing_images** - รูปภาพหอพัก
 - **favorites** - รายการโปรด
 
+## CI/CD
+
+### Flow
+
+```
+push to main
+  ├── GitHub Actions  →  build check (client + server)
+  ├── Railway         →  auto-deploy backend
+  └── Vercel          →  auto-deploy frontend
+
+open PR
+  └── GitHub Actions  →  build check เท่านั้น (ไม่ deploy)
+```
+
+### 1. Railway — Backend + Database
+
+1. ไปที่ [railway.app](https://railway.app) → **New Project** → **Deploy from GitHub repo**
+2. เลือก service → **Settings** → **Root Directory** = `server`
+3. เพิ่ม **MySQL plugin** ใน project เดียวกัน
+4. ตั้ง Environment Variables ใน backend service:
+
+| Variable | Value |
+|----------|-------|
+| `DB_HOST` | `${{MySQL.MYSQLHOST}}` 
+                            ↑
+                            ชื่อนี้ต้องตรงกับชื่อ plugin ที่สร้างใน Railway
+                            (ถ้า Railway ตั้งชื่อว่า "MySQL-db" ก็ต้องเปลี่ยนเป็น ${{MySQL-db.MYSQLHOST}}) |
+| `DB_PORT` | `${{MySQL.MYSQLPORT}}` |
+| `DB_USER` | `${{MySQL.MYSQLUSER}}` |
+| `DB_PASSWORD` | `${{MySQL.MYSQLPASSWORD}}` |
+| `DB_NAME` | `${{MySQL.MYSQLDATABASE}}` |
+| `DB_SSL` | `false` |
+| `JWT_SECRET` | ใส่ค่าจริง |
+| `CLOUDINARY_CLOUD_NAME` | ใส่ค่าจริง |
+| `CLOUDINARY_API_KEY` | ใส่ค่าจริง |
+| `CLOUDINARY_API_SECRET` | ใส่ค่าจริง |
+| `CLIENT_URL` | URL ของ Vercel เช่น `https://your-app.vercel.app` |
+
+> **หมายเหตุ:** ชื่อใน `${{MySQL.xxx}}` ต้องตรงกับชื่อ plugin ใน Railway dashboard
+> เช่น ถ้าชื่อ plugin คือ `MySQL-db` ให้เปลี่ยนเป็น `${{MySQL-db.MYSQLHOST}}`
+
+5. Copy Railway URL ไปใช้ในขั้นตอนถัดไป
+
+### 2. Vercel — Frontend
+
+1. ไปที่ [vercel.com](https://vercel.com) → **New Project** → **Import GitHub repo**
+2. **Settings** → **Root Directory** = `client`
+3. ตั้ง Environment Variables:
+
+| Variable | Value |
+|----------|-------|
+| `VITE_API_URL` | Railway URL เช่น `https://your-backend.up.railway.app` |
+| `VITE_GOOGLE_MAPS_API_KEY` | ใส่ค่าจริง (ถ้าใช้) |
+
+### 3. GitHub Actions Secrets
+
+**Settings** → **Secrets and variables** → **Actions** → เพิ่ม:
+
+| Secret | ใช้สำหรับ |
+|--------|-----------|
+| `VITE_API_URL` | CI build check |
+| `VITE_GOOGLE_MAPS_API_KEY` | CI build check (optional) |
+
+---
+
 ## หมายเหตุ
 
 - สำหรับ Google Maps ในหน้า Listing Detail ต้องใส่ API Key ใน `ListingDetail.jsx`
 - ไฟล์รูปภาพจะถูกเก็บไว้ใน `server/uploads/`
 - ระบบใช้ JWT Token สำหรับ Authentication (หมดอายุ 7 วัน)
-
-## License
-
-MIT

@@ -178,10 +178,7 @@ open PR
 
 | Variable | Value |
 |----------|-------|
-| `DB_HOST` | `${{MySQL.MYSQLHOST}}` 
-                            ↑
-                            ชื่อนี้ต้องตรงกับชื่อ plugin ที่สร้างใน Railway
-                            (ถ้า Railway ตั้งชื่อว่า "MySQL-db" ก็ต้องเปลี่ยนเป็น ${{MySQL-db.MYSQLHOST}}) |
+| `DB_HOST` | `${{MySQL.MYSQLHOST}}` |
 | `DB_PORT` | `${{MySQL.MYSQLPORT}}` |
 | `DB_USER` | `${{MySQL.MYSQLUSER}}` |
 | `DB_PASSWORD` | `${{MySQL.MYSQLPASSWORD}}` |
